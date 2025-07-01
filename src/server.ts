@@ -6,6 +6,7 @@ import compression from 'compression';
 import { rateLimit } from 'express-rate-limit';
 import connectToDB from './config/databaseConfig/databaseConfig';
 import userRoute from './controller/user/user.controller';
+import profileRoute from './controller/profile/profile.controller';
 import notFoundRoute from './middleware/404/notFoundRoute';
 import backendServerError from './middleware/500/backendServerError';
 const app: Application = express();
@@ -34,6 +35,8 @@ const limiter = rateLimit({
 })
 app.use(limiter);
 app.use(`/api/${API_VERSION}/user`, userRoute);
+app.use(`/api/${API_VERSION}/profile`, profileRoute);
+
 // Custom middleware routes to handle 404 incoming http request and 500 server-side error
 app.use(notFoundRoute);
 app.use(backendServerError);
