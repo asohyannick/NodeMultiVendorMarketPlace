@@ -10,6 +10,7 @@ import sendEmail from '../../service/impl/user/emailServiceProvider/emailService
 import showUsers from '../../service/impl/user/showUsers/showUsers.impl';
 import showUser from '../../service/impl/user/showUser/showUser.impl';
 import updateUser from '../../service/impl/user/updateUser/updateUser.impl';
+import deleteUser from '../../service/impl/user/deleteUser/deleteUser.impl';
 const router = express.Router();
 router.post('/create-account', globalValidator(validateUserRegistration), register);
 router.post('/login', authenticationToken, globalValidator(validateUserLogin), login);
@@ -19,4 +20,5 @@ router.post('/send-emails', authenticationToken, sendEmail);
 router.get('/show-users', authenticationToken, showUsers);
 router.get('/show-user/:id', authenticationToken, showUser);
 router.put('/update-user/:id', authenticationToken, globalValidator(validateUpdatedUserRegistration), updateUser);
+router.delete('/delete-user/:id', authenticationToken, deleteUser);
 export default router;

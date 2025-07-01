@@ -22,7 +22,7 @@ const updateUser = async (req: Request, res: Response): Promise<Response> => {
         }
         return res.status(StatusCodes.OK).json({
             success: true,
-            message: "Authenticated user has been updated successfully!",
+            message: "User has been updated successfully!",
             user
         });
     } catch (error) {

@@ -10,7 +10,7 @@ const showUser = async (req: Request, res: Response): Promise<Response> => {
         }
         return res.status(StatusCodes.OK).json({
             success: true,
-            message: "Authenticated user has been fetched successfully!",
+            message: "User has been fetched successfully!",
             user
         })
     } catch (error) {

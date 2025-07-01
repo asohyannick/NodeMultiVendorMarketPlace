@@ -1,14 +1,17 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import User from "../../../../model/user/user.model";
-const showUsers = async (_req: Request, res: Response): Promise<Response> => {
-
+const deleteUser = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const users = await User.find();
+        const { id } = req.params;
+        const user = await User.findByIdAndDelete(id);
+        if (!user) {
+            return res.status(StatusCodes.NOT_FOUND).json({message: "User doesn't exist!"});
+        }
         return res.status(StatusCodes.OK).json({
             success: true,
-            message: "Users have been fetched successfully!",
-            users
+            message: "User has been deleted successfully!",
+            user
         })
     } catch (error) {
         console.error("Error occurred!", error);
@@ -18,4 +21,4 @@ const showUsers = async (_req: Request, res: Response): Promise<Response> => {
         });
     }
 }
-export default showUsers;
+export default deleteUser;
