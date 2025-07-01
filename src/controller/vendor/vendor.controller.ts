@@ -3,6 +3,8 @@ import authenticationToken from '../../middleware/auth/authenticationToken.middl
 import globalValidator from '../../utils/globalValidator';
 import { vendorValidationSchema } from '../../utils/validator';
 import createVendor from '../../service/impl/vendor/createVendor/createVendor.impl';
+import showVendors from '../../service/impl/vendor/showVendors/showVendors.impl';
 const router = express.Router();
 router.post('/create-new-vendor', authenticationToken, globalValidator(vendorValidationSchema), createVendor);
+router.get('/show-vendors', authenticationToken, showVendors);
 export default router;
