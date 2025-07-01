@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { rateLimit } from 'express-rate-limit';
 import connectToDB from './config/databaseConfig/databaseConfig';
+import userRoute from './controller/user/user.controller';
 import notFoundRoute from './middleware/404/notFoundRoute';
 import backendServerError from './middleware/500/backendServerError';
 const app: Application = express();
@@ -32,9 +33,7 @@ const limiter = rateLimit({
     // store: ... , // Redis, Memcached, etc. See below.
 })
 app.use(limiter);
-app.get('/test', (_req, res) => {
-    res.status(200).json({ message: "Hello world" });
-});
+app.use(`/api/${API_VERSION}/user`, userRoute);
 // Custom middleware routes to handle 404 incoming http request and 500 server-side error
 app.use(notFoundRoute);
 app.use(backendServerError);
