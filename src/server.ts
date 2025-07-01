@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { rateLimit } from 'express-rate-limit';
 import connectToDB from './config/databaseConfig/databaseConfig';
+import notFoundRoute from './middleware/404/notFoundRoute';
+import backendServerError from './middleware/500/backendServerError';
 const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,6 +35,9 @@ app.use(limiter);
 app.get('/test', (_req, res) => {
     res.status(200).json({ message: "Hello world" });
 });
+// Custom middleware routes to handle 404 incoming http request and 500 server-side error
+app.use(notFoundRoute);
+app.use(backendServerError);
 async function serve() {
     try {
         await connectToDB(),
