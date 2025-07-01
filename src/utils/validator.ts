@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 import { MaritalStatus } from '../service/interfac/profile/profile.interfac';
+import { Types } from 'mongoose';
+import { VendorStatus, VendorTypeStatus } from '../service/interfac/vendor/vendor.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().trim().required('firstName must be provided').min(6, 'firstName must be at least 3 characters minimum'),
     lastName: Yup.string().trim().required('lasttName must be provided').min(6, 'lasttName must be at least 3 characters minimum'),
@@ -52,10 +54,93 @@ const validateUpdatedProfileRegistration = Yup.object().shape({
     married: Yup.mixed().required('Marital status must be provided').oneOf(Object.values(MaritalStatus)),
     date: Yup.date().required('The date must be provided'),
 });
+const vendorValidationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    description: Yup.string().required('Description is required'),
+    contact: Yup.object().shape({
+        email: Yup.string().email('Invalid email format').required('Email is required'),
+        phone: Yup.string().required('Phone number is required'),
+        address: Yup.object().shape({
+            street: Yup.string().required('Street is required'),
+            city: Yup.string().required('City is required'),
+            state: Yup.string().required('State is required'),
+            country: Yup.string().required('Country is required'),
+            zipCode: Yup.string().required('Zip code is required'),
+        }).required('Address is required'),
+    }).required('Contact information is required'),
+    socialMedia: Yup.object().shape({
+        facebook: Yup.string().url('Invalid URL').required('Facebook URL is required'),
+        twitter: Yup.string().url('Invalid URL').required('Twitter URL is required'),
+        instagram: Yup.string().url('Invalid URL').required('Instagram URL is required'),
+        linkedin: Yup.string().url('Invalid URL').required('LinkedIn URL is required'),
+    }).required('Social media links are required'),
+    productId: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+    ratings: Yup.array().of(Yup.object().shape({
+        userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+        score: Yup.string().required('Score is required'),
+        comment: Yup.string().optional(),
+    })).optional(),
+    status: Yup.mixed<VendorStatus>().oneOf(Object.values(VendorStatus)).required('Status is required'),
+    lastLogin: Yup.date().optional(),
+    verified: Yup.boolean().required('Verification status is required'),
+    commissions: Yup.number().min(0, 'Commissions must be a positive number').required('Commissions are required'),
+    feedback: Yup.array().of(Yup.object().shape({
+        userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+        feedback: Yup.string().required('Feedback is required'),
+    })).optional(),
+    documents: Yup.array().of(Yup.object().shape({
+        type: Yup.mixed<VendorTypeStatus>().oneOf(Object.values(VendorTypeStatus)).required('Document type is required'),
+        url: Yup.string().url('Invalid URL').required('Document URL is required'),
+        verified: Yup.boolean().required('Verification status is required'),
+    })).optional(),
+});
+
+const updateVendorValidationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    description: Yup.string().required('Description is required'),
+    contact: Yup.object().shape({
+        email: Yup.string().email('Invalid email format').required('Email is required'),
+        phone: Yup.string().required('Phone number is required'),
+        address: Yup.object().shape({
+            street: Yup.string().required('Street is required'),
+            city: Yup.string().required('City is required'),
+            state: Yup.string().required('State is required'),
+            country: Yup.string().required('Country is required'),
+            zipCode: Yup.string().required('Zip code is required'),
+        }).required('Address is required'),
+    }).required('Contact information is required'),
+    socialMedia: Yup.object().shape({
+        facebook: Yup.string().url('Invalid URL').required('Facebook URL is required'),
+        twitter: Yup.string().url('Invalid URL').required('Twitter URL is required'),
+        instagram: Yup.string().url('Invalid URL').required('Instagram URL is required'),
+        linkedin: Yup.string().url('Invalid URL').required('LinkedIn URL is required'),
+    }).required('Social media links are required'),
+    productId: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+    ratings: Yup.array().of(Yup.object().shape({
+        userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+        score: Yup.string().required('Score is required'),
+        comment: Yup.string().optional(),
+    })).optional(),
+    status: Yup.mixed<VendorStatus>().oneOf(Object.values(VendorStatus)).required('Status is required'),
+    lastLogin: Yup.date().optional(),
+    verified: Yup.boolean().required('Verification status is required'),
+    commissions: Yup.number().min(0, 'Commissions must be a positive number').required('Commissions are required'),
+    feedback: Yup.array().of(Yup.object().shape({
+        userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+        feedback: Yup.string().required('Feedback is required'),
+    })).optional(),
+    documents: Yup.array().of(Yup.object().shape({
+        type: Yup.mixed<VendorTypeStatus>().oneOf(Object.values(VendorTypeStatus)).required('Document type is required'),
+        url: Yup.string().url('Invalid URL').required('Document URL is required'),
+        verified: Yup.boolean().required('Verification status is required'),
+    })).optional(),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
     validateUpdatedUserRegistration,
     validateProfileRegistration,
-    validateUpdatedProfileRegistration
+    validateUpdatedProfileRegistration,
+    vendorValidationSchema,
+    updateVendorValidationSchema
 }
