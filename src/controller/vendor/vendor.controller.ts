@@ -1,12 +1,14 @@
 import express from 'express';
 import authenticationToken from '../../middleware/auth/authenticationToken.middleware';
 import globalValidator from '../../utils/globalValidator';
-import { vendorValidationSchema } from '../../utils/validator';
+import { updateVendorValidationSchema, vendorValidationSchema } from '../../utils/validator';
 import createVendor from '../../service/impl/vendor/createVendor/createVendor.impl';
 import showVendors from '../../service/impl/vendor/showVendors/showVendors.impl';
 import showVendor from '../../service/impl/vendor/showVendor/showVendor.impl';
+import updateVendor from '../../service/impl/vendor/updateVendor/updateVendor.impl';
 const router = express.Router();
 router.post('/create-new-vendor', authenticationToken, globalValidator(vendorValidationSchema), createVendor);
 router.get('/show-vendors', authenticationToken, showVendors);
-router.get('/show-vendor', authenticationToken, showVendor);
+router.get('/show-vendor/:id', authenticationToken, showVendor);
+router.put('/update-vendor/:id', authenticationToken, globalValidator(updateVendorValidationSchema), updateVendor);
 export default router;
