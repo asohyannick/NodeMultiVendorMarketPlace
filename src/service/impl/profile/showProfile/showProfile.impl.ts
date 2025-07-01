@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import User from "../../../../model/user/user.model";
 const showProfile = async(req: Request, res: Response): Promise<Response> => {
     try {
-        const { id } = req.body;
+        const { id } = req.params;
         const profile = await User.findById(id);
         if (!profile) {
             return res.status(StatusCodes.NOT_FOUND).json({message: "Profile doesn't exist!"});
