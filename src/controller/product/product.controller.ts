@@ -3,6 +3,8 @@ import authenticationToken from '../../middleware/auth/authenticationToken.middl
 import createProduct from '../../service/impl/product/createProduct/createProduct.impl';
 import globalValidator from '../../utils/globalValidator';
 import { productValidationSchema } from '../../utils/validator';
+import showProducts from '../../service/impl/product/showProducts/showProducts.impl';
 const router = express.Router();
 router.post('/create-product', authenticationToken, globalValidator(productValidationSchema), createProduct);
+router.get('/show-products', authenticationToken, showProducts);
 export default router;
