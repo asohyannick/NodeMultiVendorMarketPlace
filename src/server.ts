@@ -10,6 +10,7 @@ import profileRoute from './controller/profile/profile.controller';
 import vendorRoute from './controller/vendor/vendor.controller';
 import productRoute from './controller/product/product.controller';
 import categoryRoute from './controller/category/category.controller';
+import orderRoute from './controller/order/order.controller';
 import notFoundRoute from './middleware/404/notFoundRoute';
 import backendServerError from './middleware/500/backendServerError';
 const app: Application = express();
@@ -42,6 +43,7 @@ app.use(`/api/${API_VERSION}/profile`, profileRoute);
 app.use(`/api/${API_VERSION}/vendor`, vendorRoute);
 app.use(`/api/${API_VERSION}/product`, productRoute);
 app.use(`/api/${API_VERSION}/category`, categoryRoute);
+app.use(`/api/${API_VERSION}/order`, orderRoute);
 
 // Custom middleware routes to handle 404 incoming http request and 500 server-side error
 app.use(notFoundRoute);

@@ -3,6 +3,7 @@ import { MaritalStatus } from '../service/interfac/profile/profile.interfac';
 import { Types } from 'mongoose';
 import { VendorStatus, VendorTypeStatus } from '../service/interfac/vendor/vendor.interfac';
 import { ProductStatus } from '../service/interfac/product/product.interfac';
+import { OrderStatus, PaymentCashMethodStatus, PaymentMethodStatus } from '../service/interfac/order/order.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().trim().required('firstName must be provided').min(6, 'firstName must be at least 3 characters minimum'),
     lastName: Yup.string().trim().required('lasttName must be provided').min(6, 'lasttName must be at least 3 characters minimum'),
@@ -196,6 +197,58 @@ const updateCategoryValidationSchema = Yup.object().shape({
     }).required('Image information is required'),
     isActive: Yup.boolean().required('Active status is required').default(false),
 });
+const orderValidationSchema = Yup.object().shape({
+    user: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    vendor: Yup.mixed<Types.ObjectId>().required('Vendor ID is required'),
+    products: Yup.array().of(Yup.object().shape({
+        product: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+        stockQuantity: Yup.number().min(1, 'Stock quantity must be at least 1').required('Stock quantity is required'),
+        price: Yup.number().min(0, 'Price must be a positive number').required('Price is required'),
+    })).required('At least one product is required'),
+    shippingAddress: Yup.object().shape({
+        name: Yup.string().required('Name is required'),
+        street: Yup.string().required('Street is required'),
+        city: Yup.string().required('City is required'),
+        state: Yup.string().required('State is required'),
+        country: Yup.string().required('Country is required'),
+        zipCode: Yup.string().required('Zip code is required'),
+    }).required('Shipping address is required'),
+    payment: Yup.object().shape({
+        method: Yup.object().shape({
+            type: Yup.mixed<PaymentCashMethodStatus>().oneOf(Object.values(PaymentCashMethodStatus)).required('Payment method is required'),
+        }).required('Payment method is required'),
+        status: Yup.mixed<PaymentMethodStatus>().oneOf(Object.values(PaymentMethodStatus)).required('Payment status is required'),
+        transactionId: Yup.string().required('Transaction ID is required'),
+    }).required('Payment information is required'),
+    status: Yup.mixed<OrderStatus>().oneOf(Object.values(OrderStatus)).required('Order status is required'),
+    totalAmount: Yup.number().min(0, 'Total amount must be a positive number').required('Total amount is required'),
+});
+const updateOrderValidationSchema = Yup.object().shape({
+    user: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    vendor: Yup.mixed<Types.ObjectId>().required('Vendor ID is required'),
+    products: Yup.array().of(Yup.object().shape({
+        product: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+        stockQuantity: Yup.number().min(1, 'Stock quantity must be at least 1').required('Stock quantity is required'),
+        price: Yup.number().min(0, 'Price must be a positive number').required('Price is required'),
+    })).required('At least one product is required'),
+    shippingAddress: Yup.object().shape({
+        name: Yup.string().required('Name is required'),
+        street: Yup.string().required('Street is required'),
+        city: Yup.string().required('City is required'),
+        state: Yup.string().required('State is required'),
+        country: Yup.string().required('Country is required'),
+        zipCode: Yup.string().required('Zip code is required'),
+    }).required('Shipping address is required'),
+    payment: Yup.object().shape({
+        method: Yup.object().shape({
+            type: Yup.mixed<PaymentCashMethodStatus>().oneOf(Object.values(PaymentCashMethodStatus)).required('Payment method is required'),
+        }).required('Payment method is required'),
+        status: Yup.mixed<PaymentMethodStatus>().oneOf(Object.values(PaymentMethodStatus)).required('Payment status is required'),
+        transactionId: Yup.string().required('Transaction ID is required'),
+    }).required('Payment information is required'),
+    status: Yup.mixed<OrderStatus>().oneOf(Object.values(OrderStatus)).required('Order status is required'),
+    totalAmount: Yup.number().min(0, 'Total amount must be a positive number').required('Total amount is required'),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -207,5 +260,7 @@ export {
     productValidationSchema,
     updateProductValidationSchema,
     categoryValidationSchema,
-    updateCategoryValidationSchema
+    updateCategoryValidationSchema,
+    orderValidationSchema,
+    updateOrderValidationSchema
 }
