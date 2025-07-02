@@ -174,6 +174,28 @@ const updateProductValidationSchema = Yup.object().shape({
     tags: Yup.array().of(Yup.string().trim()).optional(),
     status: Yup.mixed<ProductStatus>().oneOf(Object.values(ProductStatus)).required('Status is required'),
 });
+const categoryValidationSchema = Yup.object().shape({
+    categoryId: Yup.mixed<Types.ObjectId>().required('Category ID is required'),
+    productId: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+    name: Yup.string().required('Name is required').trim(),
+    description: Yup.string().required('Description is required').trim(),
+    image: Yup.object().shape({
+        url: Yup.string().url('Invalid URL').required('Image URL is required').trim(),
+        altText: Yup.string().required('Alt text is required').trim(),
+    }).required('Image information is required'),
+    isActive: Yup.boolean().required('Active status is required').default(false),
+});
+const updateCategoryValidationSchema = Yup.object().shape({
+    categoryId: Yup.mixed<Types.ObjectId>().required('Category ID is required'),
+    productId: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+    name: Yup.string().required('Name is required').trim(),
+    description: Yup.string().required('Description is required').trim(),
+    image: Yup.object().shape({
+        url: Yup.string().url('Invalid URL').required('Image URL is required').trim(),
+        altText: Yup.string().required('Alt text is required').trim(),
+    }).required('Image information is required'),
+    isActive: Yup.boolean().required('Active status is required').default(false),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -183,5 +205,7 @@ export {
     vendorValidationSchema,
     updateVendorValidationSchema,
     productValidationSchema,
-    updateProductValidationSchema
+    updateProductValidationSchema,
+    categoryValidationSchema,
+    updateCategoryValidationSchema
 }
