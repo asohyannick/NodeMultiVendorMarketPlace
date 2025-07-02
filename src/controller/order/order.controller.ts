@@ -3,6 +3,8 @@ import authenticationToken from '../../middleware/auth/authenticationToken.middl
 import createOrder from '../../service/impl/order/createOrder/createOrder.impl';
 import globalValidator from '../../utils/globalValidator';
 import { orderValidationSchema } from '../../utils/validator';
+import showOrders from '../../service/impl/order/showOrders/showOrders.impl';
 const router = express.Router();
 router.post('/create-order', authenticationToken, globalValidator(orderValidationSchema), createOrder);
+router.get('/show-orders', authenticationToken, showOrders);
 export default router;
