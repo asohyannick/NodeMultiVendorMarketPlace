@@ -6,10 +6,11 @@ import { productValidationSchema, updateProductValidationSchema } from '../../ut
 import showProducts from '../../service/impl/product/showProducts/showProducts.impl';
 import showProduct from '../../service/impl/product/showProduct/showProduct.impl';
 import updateProduct from '../../service/impl/product/updateProduct/updateProduct.impl';
+import deleteProduct from '../../service/impl/product/deleteProduct/deleteProduct.impl';
 const router = express.Router();
 router.post('/create-product', authenticationToken, globalValidator(productValidationSchema), createProduct);
 router.get('/show-products', authenticationToken, showProducts);
 router.get('/show-product/:id', authenticationToken, showProduct);
 router.put('/update-product/:id', authenticationToken, globalValidator(updateProductValidationSchema), updateProduct);
-
+router.delete('/delete-product/:id', authenticationToken, deleteProduct);
 export default router;
