@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import Product from "../../../../model/product/product.model";
-const showProducts = async (_req: Request, res: Response): Promise<Response> => {
+const showProduct = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const products = await Product.find();
+        const { id } = req.params;
+        const product = await Product.findById(id);
+        if (!product) {
+            return res.status(StatusCodes.NOT_FOUND).json({message: "Product doesn't exist!"});
+        }
         return res.status(StatusCodes.OK).json({
             success: true,
-            message: "Products have been fetched successfully!",
-            products
+            message: "Product has been fetched successfully!",
+            product
         });
     } catch (error) {
         console.error(error);
@@ -18,4 +22,4 @@ const showProducts = async (_req: Request, res: Response): Promise<Response> => 
     }
 }
 
-export default showProducts;
+export default showProduct;

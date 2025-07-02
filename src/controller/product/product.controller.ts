@@ -4,7 +4,9 @@ import createProduct from '../../service/impl/product/createProduct/createProduc
 import globalValidator from '../../utils/globalValidator';
 import { productValidationSchema } from '../../utils/validator';
 import showProducts from '../../service/impl/product/showProducts/showProducts.impl';
+import showProduct from '../../service/impl/product/showProduct/showProduct.impl';
 const router = express.Router();
 router.post('/create-product', authenticationToken, globalValidator(productValidationSchema), createProduct);
 router.get('/show-products', authenticationToken, showProducts);
+router.get('/show-product/:id', authenticationToken, showProduct);
 export default router;
