@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { MaritalStatus } from '../service/interfac/profile/profile.interfac';
 import { Types } from 'mongoose';
 import { VendorStatus, VendorTypeStatus } from '../service/interfac/vendor/vendor.interfac';
+import { ProductStatus } from '../service/interfac/product/product.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().trim().required('firstName must be provided').min(6, 'firstName must be at least 3 characters minimum'),
     lastName: Yup.string().trim().required('lasttName must be provided').min(6, 'lasttName must be at least 3 characters minimum'),
@@ -135,6 +136,44 @@ const updateVendorValidationSchema = Yup.object().shape({
         verified: Yup.boolean().required('Verification status is required'),
     })).optional(),
 });
+const productValidationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    description: Yup.string().required('Description is required'),
+    vendorId: Yup.mixed<Types.ObjectId>().required('Vendor ID is required'),
+    categoryId: Yup.mixed<Types.ObjectId>().required('Category ID is required'),
+    price: Yup.number().min(0, 'Price must be a positive number').required('Price is required'),
+    stockQuantity: Yup.number().min(0, 'Stock quantity must be a non-negative integer').required('Stock quantity is required'),
+    images: Yup.array().of(Yup.object().shape({
+        url: Yup.string().url('Invalid URL').required('Image URL is required'),
+        altText: Yup.string().required('Alt text is required'),
+    })).optional(),
+    ratings: Yup.array().of(Yup.object().shape({
+        userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+        score: Yup.number().min(1).max(5).required('Score must be between 1 and 5'),
+        comment: Yup.string().optional(),
+    })).optional(),
+    tags: Yup.array().of(Yup.string()).optional(),
+    status: Yup.mixed<ProductStatus>().oneOf(Object.values(ProductStatus)).required('Status is required'),
+});
+const updateProductValidationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    description: Yup.string().required('Description is required'),
+    vendorId: Yup.mixed<Types.ObjectId>().required('Vendor ID is required'),
+    categoryId: Yup.mixed<Types.ObjectId>().required('Category ID is required'),
+    price: Yup.number().min(0, 'Price must be a positive number').required('Price is required'),
+    stockQuantity: Yup.number().min(0, 'Stock quantity must be a non-negative integer').required('Stock quantity is required'),
+    images: Yup.array().of(Yup.object().shape({
+        url: Yup.string().url('Invalid URL').required('Image URL is required'),
+        altText: Yup.string().required('Alt text is required'),
+    })).optional(),
+    ratings: Yup.array().of(Yup.object().shape({
+        userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+        score: Yup.number().min(1).max(5).required('Score must be between 1 and 5'),
+        comment: Yup.string().optional(),
+    })).optional(),
+    tags: Yup.array().of(Yup.string()).optional(),
+    status: Yup.mixed<ProductStatus>().oneOf(Object.values(ProductStatus)).required('Status is required'),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -142,5 +181,7 @@ export {
     validateProfileRegistration,
     validateUpdatedProfileRegistration,
     vendorValidationSchema,
-    updateVendorValidationSchema
+    updateVendorValidationSchema,
+    productValidationSchema,
+    updateProductValidationSchema
 }
