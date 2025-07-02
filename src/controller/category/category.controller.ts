@@ -1,12 +1,15 @@
 import express from 'express';
 import authenticationToken from '../../middleware/auth/authenticationToken.middleware';
 import globalValidator from '../../utils/globalValidator';
-import { categoryValidationSchema } from '../../utils/validator';
+import { categoryValidationSchema, updateCategoryValidationSchema } from '../../utils/validator';
 import createCategory from '../../service/impl/category/createCategory/createCategory.impl';
 import showCategories from '../../service/impl/category/showCategories/showCategories.impl';
 import showCategory from '../../service/impl/category/showCategory/showCategory.impl';
+import updateCategory from '../../service/impl/category/updateCategory/updateCategory.impl';
 const router = express.Router();
 router.post('/create-category', authenticationToken, globalValidator(categoryValidationSchema), createCategory);
 router.get('/show-categories', authenticationToken, showCategories);
-router.get('/show-category/:id', authenticationToken, showCategory)
+router.get('/show-category/:id', authenticationToken, showCategory);
+router.put('/update-category/:id', authenticationToken, globalValidator(updateCategoryValidationSchema), updateCategory);
+
 export default router;
