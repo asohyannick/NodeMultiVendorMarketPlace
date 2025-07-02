@@ -6,9 +6,11 @@ import { orderValidationSchema, updateOrderValidationSchema } from '../../utils/
 import showOrders from '../../service/impl/order/showOrders/showOrders.impl';
 import showOrder from '../../service/impl/order/showOrder/showOrder.impl';
 import updateOrder from '../../service/impl/order/updateOrder/updateOrder.impl';
+import deleteOrder from '../../service/impl/order/deleteOrder/deleteOrder.impl';
 const router = express.Router();
 router.post('/create-order', authenticationToken, globalValidator(orderValidationSchema), createOrder);
 router.get('/show-orders', authenticationToken, showOrders);
 router.get('/show-order/:id', authenticationToken, showOrder);
 router.put('/update-order/:id', authenticationToken, globalValidator(updateOrderValidationSchema), updateOrder);
+router.delete('/delete-order/:id', authenticationToken, deleteOrder);
 export default router;
