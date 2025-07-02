@@ -137,8 +137,8 @@ const updateVendorValidationSchema = Yup.object().shape({
     })).optional(),
 });
 const productValidationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    description: Yup.string().required('Description is required'),
+    name: Yup.string().required('Name is required').trim(),
+    description: Yup.string().required('Description is required').trim(),
     vendorId: Yup.mixed<Types.ObjectId>().required('Vendor ID is required'),
     categoryId: Yup.mixed<Types.ObjectId>().required('Category ID is required'),
     price: Yup.number().min(0, 'Price must be a positive number').required('Price is required'),
@@ -150,14 +150,14 @@ const productValidationSchema = Yup.object().shape({
     ratings: Yup.array().of(Yup.object().shape({
         userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
         score: Yup.number().min(1).max(5).required('Score must be between 1 and 5'),
-        comment: Yup.string().optional(),
+        comment: Yup.string().optional().trim(),
     })).optional(),
-    tags: Yup.array().of(Yup.string()).optional(),
+    tags: Yup.array().of(Yup.string().trim()).optional(),
     status: Yup.mixed<ProductStatus>().oneOf(Object.values(ProductStatus)).required('Status is required'),
 });
 const updateProductValidationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    description: Yup.string().required('Description is required'),
+    name: Yup.string().required('Name is required').trim(),
+    description: Yup.string().required('Description is required').trim(),
     vendorId: Yup.mixed<Types.ObjectId>().required('Vendor ID is required'),
     categoryId: Yup.mixed<Types.ObjectId>().required('Category ID is required'),
     price: Yup.number().min(0, 'Price must be a positive number').required('Price is required'),
@@ -171,7 +171,7 @@ const updateProductValidationSchema = Yup.object().shape({
         score: Yup.number().min(1).max(5).required('Score must be between 1 and 5'),
         comment: Yup.string().optional(),
     })).optional(),
-    tags: Yup.array().of(Yup.string()).optional(),
+    tags: Yup.array().of(Yup.string().trim()).optional(),
     status: Yup.mixed<ProductStatus>().oneOf(Object.values(ProductStatus)).required('Status is required'),
 });
 export {

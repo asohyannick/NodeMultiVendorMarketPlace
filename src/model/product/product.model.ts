@@ -12,12 +12,10 @@ const productSchema: Schema = new Schema<IProduct>({
     vendorId: {
         type: Schema.ObjectId,
         ref: 'Vendor',
-        required: true,
     },
     categoryId: {
         type: Schema.Types.ObjectId,
         ref: 'Category',
-        required: true,
     },
     price: {
         type: Number,
@@ -30,7 +28,7 @@ const productSchema: Schema = new Schema<IProduct>({
         altText: { type: String, trim: true },
     }],
     ratings: [{
-        userId: { type: Schema.ObjectId, ref: 'User', required: true },
+        userId: { type: Schema.ObjectId, ref: 'User',},
         score: { type: Number },
         comment: { type: String, trim: true },
     }],
