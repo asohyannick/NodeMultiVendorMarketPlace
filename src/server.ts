@@ -13,6 +13,7 @@ import categoryRoute from './controller/category/category.controller';
 import orderRoute from './controller/order/order.controller';
 import cartRoute from './controller/cart/cart.controller';
 import paymentRoute from './controller/stripe/stripe.controller';
+import reviewRoute from './controller/review/review.controller';
 import notFoundRoute from './middleware/404/notFoundRoute';
 import backendServerError from './middleware/500/backendServerError';
 const app: Application = express();
@@ -47,6 +48,8 @@ app.use(`/api/${API_VERSION}/category`, categoryRoute);
 app.use(`/api/${API_VERSION}/order`, orderRoute);
 app.use(`/api/${API_VERSION}/cart`, cartRoute);
 app.use(`/api/${API_VERSION}/payment`, paymentRoute);
+app.use(`/api/${API_VERSION}/review`, reviewRoute);
+
 app.use(notFoundRoute);
 app.use(backendServerError);
 async function serve() {

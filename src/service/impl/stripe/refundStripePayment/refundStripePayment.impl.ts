@@ -4,7 +4,6 @@ import StripePayment from '../../../../model/payment/payment.model';
 import Stripe from 'stripe';
 import mongoose from 'mongoose';
 import { PaymentStatus } from '../../../interfac/payment/payment.interfac';
-// import { PaymentStatus } from '../../../interfac/stripe/stripe.interfac';
 const stripe = new Stripe(process.env.STRIPE_SECRET_API_KEY as string, {
     apiVersion: '2025-05-28.basil',
 });

@@ -276,6 +276,32 @@ const validateUpdatedStripePayment = Yup.object().shape({
     status: Yup.mixed().optional().oneOf(Object.values(PaymentStatus)),
     lastUpdated: Yup.date().optional(),
 });
+const reviewValidationSchema = Yup.object().shape({
+    user: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    product: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+    rating: Yup.number().min(1, 'Rating must be at least 1').max(5, 'Rating cannot exceed 5').required('Rating is required'),
+    title: Yup.string().required('Title is required'),
+    comment: Yup.string().optional(),
+    images: Yup.array().of(Yup.object().shape({
+        url: Yup.string().url('Invalid URL').required('Image URL is required'),
+        altText: Yup.string().required('Alt text is required'),
+    })).optional(),
+    helpfulCount: Yup.number().min(0, 'Helpful count must be a non-negative number').required('Helpful count is required'),
+    reported: Yup.boolean().required('Reported status is required'),
+});
+const updateReviewValidationSchema = Yup.object().shape({
+    user: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    product: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+    rating: Yup.number().min(1, 'Rating must be at least 1').max(5, 'Rating cannot exceed 5').required('Rating is required'),
+    title: Yup.string().required('Title is required'),
+    comment: Yup.string().optional(),
+    images: Yup.array().of(Yup.object().shape({
+        url: Yup.string().url('Invalid URL').required('Image URL is required'),
+        altText: Yup.string().required('Alt text is required'),
+    })).optional(),
+    helpfulCount: Yup.number().min(0, 'Helpful count must be a non-negative number').required('Helpful count is required'),
+    reported: Yup.boolean().required('Reported status is required'),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -294,4 +320,6 @@ export {
     updateCartValidationSchema,
     validateStripePayment,
     validateUpdatedStripePayment,
+    reviewValidationSchema,
+    updateReviewValidationSchema,
 }
