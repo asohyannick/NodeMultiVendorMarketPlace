@@ -5,6 +5,7 @@ import { VendorStatus, VendorTypeStatus } from '../service/interfac/vendor/vendo
 import { ProductStatus } from '../service/interfac/product/product.interfac';
 import { OrderStatus, PaymentCashMethodStatus, PaymentMethodStatus } from '../service/interfac/order/order.interfac';
 import { Currency, PaymentStatus } from '../service/interfac/payment/payment.interfac';
+import { NotificationTypeStatus } from '../service/interfac/notification/notification.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().trim().required('firstName must be provided').min(6, 'firstName must be at least 3 characters minimum'),
     lastName: Yup.string().trim().required('lasttName must be provided').min(6, 'lasttName must be at least 3 characters minimum'),
@@ -302,6 +303,22 @@ const updateReviewValidationSchema = Yup.object().shape({
     helpfulCount: Yup.number().min(0, 'Helpful count must be a non-negative number').required('Helpful count is required'),
     reported: Yup.boolean().required('Reported status is required'),
 });
+const notificationValidationSchema = Yup.object().shape({
+    user: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    message: Yup.string().required('Message is required'),
+    type: Yup.mixed<NotificationTypeStatus>()
+        .oneOf(Object.values(NotificationTypeStatus))
+        .required('Notification type is required'),
+    isRead: Yup.boolean().required('Read status is required'),
+});
+const updateNotificationValidationSchema = Yup.object().shape({
+    user: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    message: Yup.string().required('Message is required'),
+    type: Yup.mixed<NotificationTypeStatus>()
+        .oneOf(Object.values(NotificationTypeStatus))
+        .required('Notification type is required'),
+    isRead: Yup.boolean().required('Read status is required'),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -322,4 +339,6 @@ export {
     validateUpdatedStripePayment,
     reviewValidationSchema,
     updateReviewValidationSchema,
+    notificationValidationSchema,
+    updateNotificationValidationSchema
 }
