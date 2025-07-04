@@ -1,8 +1,10 @@
 import express from 'express';
 import authenticationToken from '../../middleware/auth/authenticationToken.middleware';
-import addProductToCart from '../../service/impl/cart/addProductToCart/addProductToCart.model';
+import addProductToCart from '../../service/impl/cart/addProductToCart/addProductToCart.impl';
 import globalValidator from '../../utils/globalValidator';
-import { cartValidationSchema } from '../../utils/validator';
+import { cartValidationSchema, updateCartValidationSchema } from '../../utils/validator';
+import updateCart from '../../service/impl/cart/updateCart/updateCart.impl';
 const router = express.Router();
 router.post('/add-product-to-cart', authenticationToken, globalValidator(cartValidationSchema),addProductToCart);
+router.put('/update-cart', authenticationToken, globalValidator(updateCartValidationSchema), updateCart);
 export default router;

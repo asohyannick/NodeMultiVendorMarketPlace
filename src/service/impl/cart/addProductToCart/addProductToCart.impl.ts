@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import Product from "../../../../model/product/product.model";
 const addProductToCart = async (req: Request, res: Response): Promise<Response> => {
-    const { userId, productId, quantity } = req.body;
+    const { userId, productId, stockQuantity } = req.body;
     try {
         // Check if the user's cart exist and if it doesn't exist, create a new cart for the user
         let cart = await Cart.findOne({ userId });
@@ -18,10 +18,10 @@ const addProductToCart = async (req: Request, res: Response): Promise<Response> 
         // check if a product or item already exist in the cart 
         const existingItem = cart.items.find(p => p.productId.toString() === productId);
         if (existingItem) {
-            return existingItem.quantity += quantity;
+            return existingItem.stockQuantity = stockQuantity;
         } else {
             // add a new product to the cart
-            cart.items.push({ productId, quantity });
+            cart.items.push({ productId, stockQuantity });
         }
         // save the cart
         await cart.save();
