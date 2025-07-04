@@ -6,10 +6,11 @@ import createNotification from '../../service/impl/notification/createNotificati
 import showNotifications from '../../service/impl/notification/showNotifications/showNotifications.impl';
 import showNotification from '../../service/impl/notification/showNotification/showNotification.impl';
 import updateNotification from '../../service/impl/notification/updateNotification/updateNotification.impl';
+import deleteNotification from '../../service/impl/notification/deleteNotification/deleteNotification.impl';
 const router = express.Router();
 router.post('/create-notification', authenticationToken, globalValidator(notificationValidationSchema), createNotification);
 router.get('/show-notifications', authenticationToken, showNotifications);
 router.get('/show-notification/:id', authenticationToken, showNotification);
 router.put('/update-notification/:id', authenticationToken, globalValidator(updateNotificationValidationSchema), updateNotification);
-
+router.delete('/delete-notification/:id', authenticationToken, deleteNotification);
 export default router;
