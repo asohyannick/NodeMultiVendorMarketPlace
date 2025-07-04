@@ -22,6 +22,15 @@ const userSchema: Schema = new Schema<IUser>({
     refreshToken: {
         type: String,
     },
+    cart: [{
+        productId: {
+            type: Schema.ObjectId,
+            ref: 'Product',
+        },
+        quantity: {
+            type: Number,
+        },
+    }],
 }, { timestamps: true });
 userSchema.pre<IUser>('save', async function (next) {
     if (!this.isModified('password')) return next;
