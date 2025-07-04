@@ -249,6 +249,20 @@ const updateOrderValidationSchema = Yup.object().shape({
     status: Yup.mixed<OrderStatus>().oneOf(Object.values(OrderStatus)).required('Order status is required'),
     totalAmount: Yup.number().min(0, 'Total amount must be a positive number').required('Total amount is required'),
 });
+const cartValidationSchema = Yup.object().shape({
+    userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    items: Yup.array().of(Yup.object().shape({
+        productId: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+        quantity: Yup.number().min(1, 'Quantity must be at least 1').required('Quantity is required'),
+    })).required('At least one item is required in the cart'),
+});
+const updateCartValidationSchema = Yup.object().shape({
+    userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    items: Yup.array().of(Yup.object().shape({
+        productId: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+        quantity: Yup.number().min(1, 'Quantity must be at least 1').required('Quantity is required'),
+    })).required('At least one item is required in the cart'),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -262,5 +276,7 @@ export {
     categoryValidationSchema,
     updateCategoryValidationSchema,
     orderValidationSchema,
-    updateOrderValidationSchema
+    updateOrderValidationSchema,
+    cartValidationSchema,
+    updateCartValidationSchema
 }
