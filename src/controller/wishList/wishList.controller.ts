@@ -3,6 +3,8 @@ import authenticationToken from '../../middleware/auth/authenticationToken.middl
 import createWishList from '../../service/impl/wishList/createWishList/createWishList.impl';
 import globalValidator from '../../utils/globalValidator';
 import { wishListValidationSchema } from '../../utils/validator';
+import showWishLists from '../../service/impl/wishList/showWishLists/showWishLists.impl';
 const router = express.Router();
 router.post('/create-wishlist', authenticationToken, globalValidator(wishListValidationSchema), createWishList);
+router.get('/show-wishlists', authenticationToken, showWishLists);
 export default router;
