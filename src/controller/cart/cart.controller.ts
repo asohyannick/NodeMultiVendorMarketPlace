@@ -6,9 +6,11 @@ import { cartValidationSchema, updateCartValidationSchema } from '../../utils/va
 import updateCart from '../../service/impl/cart/updateCart/updateCart.impl';
 import deleteCart from '../../service/impl/cart/deleteCart/deleteCart.impl';
 import clearCart from '../../service/impl/cart/clearCart/clearCart.impl';
+import showCartItems from '../../service/impl/cart/showCartItems/showCartItems.impl';
 const router = express.Router();
 router.post('/add-product-to-cart', authenticationToken, globalValidator(cartValidationSchema),addProductToCart);
+router.get('/show-cart-items', authenticationToken, showCartItems);
 router.put('/update-cart', authenticationToken, globalValidator(updateCartValidationSchema), updateCart);
 router.delete('/delete-cart/:userId/:productId', authenticationToken, deleteCart);
-router.delete('/clear-cart', authenticationToken, clearCart);
+router.delete('/clear-cart/:userId', authenticationToken, clearCart);
 export default router;
