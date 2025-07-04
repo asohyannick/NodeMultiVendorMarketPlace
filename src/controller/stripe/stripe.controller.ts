@@ -3,6 +3,8 @@ import authenticationToken from '../../middleware/auth/authenticationToken.middl
 import { processStripePayment } from '../../service/impl/stripe/processStripePayment/processStripePayment.impl';
 import globalValidator from '../../utils/globalValidator';
 import { validateStripePayment } from '../../utils/validator';
+import { showStripePayments } from '../../service/impl/stripe/showStripePayments/showStripePayments.impl';
 const router = express.Router();
 router.post('/create-payment', authenticationToken, globalValidator(validateStripePayment), processStripePayment);
+router.get('/show-payments', authenticationToken, showStripePayments);
 export default router;
