@@ -6,10 +6,11 @@ import { updateReviewValidationSchema, wishListValidationSchema } from '../../ut
 import showWishLists from '../../service/impl/wishList/showWishLists/showWishLists.impl';
 import showWishList from '../../service/impl/wishList/showWishList/showWishList.impl';
 import updateWishList from '../../service/impl/wishList/updateWishList/updateWishList.impl';
+import deleteWishList from '../../service/impl/wishList/deleteWishList/deleteWishList.impl';
 const router = express.Router();
 router.post('/create-wishlist', authenticationToken, globalValidator(wishListValidationSchema), createWishList);
 router.get('/show-wishlists', authenticationToken, showWishLists);
 router.get('/show-wishlist/:id', authenticationToken, showWishList);
-router.put('/update-wishlist/:id', authenticationToken,globalValidator(updateReviewValidationSchema), updateWishList);
-
+router.put('/update-wishlist/:id', authenticationToken, globalValidator(updateReviewValidationSchema), updateWishList);
+router.delete('/delete-wishlist/:id', authenticationToken, deleteWishList);
 export default router;
