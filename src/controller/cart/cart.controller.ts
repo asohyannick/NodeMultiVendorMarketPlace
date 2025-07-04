@@ -4,7 +4,9 @@ import addProductToCart from '../../service/impl/cart/addProductToCart/addProduc
 import globalValidator from '../../utils/globalValidator';
 import { cartValidationSchema, updateCartValidationSchema } from '../../utils/validator';
 import updateCart from '../../service/impl/cart/updateCart/updateCart.impl';
+import deleteCart from '../../service/impl/cart/deleteCart/deleteCart.impl';
 const router = express.Router();
 router.post('/add-product-to-cart', authenticationToken, globalValidator(cartValidationSchema),addProductToCart);
 router.put('/update-cart', authenticationToken, globalValidator(updateCartValidationSchema), updateCart);
+router.delete('/delete-cart/:userId/:productId', authenticationToken, deleteCart);
 export default router;
