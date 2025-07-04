@@ -17,6 +17,7 @@ import cartRoute from './controller/cart/cart.controller';
 import paymentRoute from './controller/stripe/stripe.controller';
 import reviewRoute from './controller/review/review.controller';
 import notificationRoute from './controller/notification/notification.controller';
+import wishListRoute from './controller/wishList/wishList.controller';
 import notFoundRoute from './middleware/404/notFoundRoute';
 import backendServerError from './middleware/500/backendServerError';
 const app: Application = express();
@@ -61,6 +62,8 @@ app.use(`/api/${API_VERSION}/cart`, cartRoute);
 app.use(`/api/${API_VERSION}/payment`, paymentRoute);
 app.use(`/api/${API_VERSION}/review`, reviewRoute);
 app.use(`/api/${API_VERSION}/notification`, notificationRoute);
+app.use(`/api/${API_VERSION}/wishlist`, wishListRoute);
+
 app.use(notFoundRoute);
 app.use(backendServerError);
 async function serve() {

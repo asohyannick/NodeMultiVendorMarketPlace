@@ -319,6 +319,22 @@ const updateNotificationValidationSchema = Yup.object().shape({
         .required('Notification type is required'),
     isRead: Yup.boolean().required('Read status is required'),
 });
+const wishListValidationSchema = Yup.object().shape({
+    userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    items: Yup.array().of(Yup.object().shape({
+        productId: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+        addedAt: Yup.date().required('Added date is required'),
+        notes: Yup.string().optional(),
+    })).required('At least one item is required in the wish list'),
+});
+const updateWishListValidationSchema = Yup.object().shape({
+    userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    items: Yup.array().of(Yup.object().shape({
+        productId: Yup.mixed<Types.ObjectId>().required('Product ID is required'),
+        addedAt: Yup.date().required('Added date is required'),
+        notes: Yup.string().optional(),
+    })).required('At least one item is required in the wish list'),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -340,5 +356,7 @@ export {
     reviewValidationSchema,
     updateReviewValidationSchema,
     notificationValidationSchema,
-    updateNotificationValidationSchema
+    updateNotificationValidationSchema,
+    wishListValidationSchema,
+    updateWishListValidationSchema,
 }
