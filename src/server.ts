@@ -20,7 +20,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const APP_NAME: string = process.env.APP_NAME as string || 'NodeMultiVendorMarketPlace';
-const APP_PORT: string | number = parseInt(process.env.APP_PORT as string || '8080', 10);
+const APP_PORT: string | number = parseInt(process.env.APP_PORT as string || '8000', 10);
 const APP_HOST: string | number = process.env.APP_HOST as string | number || 'localhost';
 const App_OWNER: string = process.env.APP_OWNER as string || 'codingLamb';
 const API_VERSION: string | number = process.env.API_VERSION as string || 'v1';
