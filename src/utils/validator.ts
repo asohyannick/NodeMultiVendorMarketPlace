@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 import { VendorStatus, VendorTypeStatus } from '../service/interfac/vendor/vendor.interfac';
 import { ProductStatus } from '../service/interfac/product/product.interfac';
 import { OrderStatus, PaymentCashMethodStatus, PaymentMethodStatus } from '../service/interfac/order/order.interfac';
+import { Currency, PaymentStatus } from '../service/interfac/payment/payment.interfac';
 const validateUserRegistration = Yup.object().shape({
     firstName: Yup.string().trim().required('firstName must be provided').min(6, 'firstName must be at least 3 characters minimum'),
     lastName: Yup.string().trim().required('lasttName must be provided').min(6, 'lasttName must be at least 3 characters minimum'),
@@ -263,6 +264,18 @@ const updateCartValidationSchema = Yup.object().shape({
         quantity: Yup.number().min(1, 'Quantity must be at least 1').required('Quantity is required'),
     })).required('At least one item is required in the cart'),
 });
+const validateStripePayment = Yup.object().shape({
+    amount: Yup.number().required('The amount must be provided').integer(),
+    currency: Yup.mixed().required('A valid currency must be provided').oneOf(Object.values(Currency)),
+    status: Yup.mixed().optional().oneOf(Object.values(PaymentStatus)),
+    lastUpdated: Yup.date().optional(),
+});
+const validateUpdatedStripePayment = Yup.object().shape({
+    amount: Yup.number().required('The amount must be provided').integer(),
+    currency: Yup.mixed().required('A valid currency must be provided').oneOf(Object.values(Currency)),
+    status: Yup.mixed().optional().oneOf(Object.values(PaymentStatus)),
+    lastUpdated: Yup.date().optional(),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -278,5 +291,7 @@ export {
     orderValidationSchema,
     updateOrderValidationSchema,
     cartValidationSchema,
-    updateCartValidationSchema
+    updateCartValidationSchema,
+    validateStripePayment,
+    validateUpdatedStripePayment,
 }

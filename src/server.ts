@@ -12,16 +12,17 @@ import productRoute from './controller/product/product.controller';
 import categoryRoute from './controller/category/category.controller';
 import orderRoute from './controller/order/order.controller';
 import cartRoute from './controller/cart/cart.controller';
+import paymentRoute from './controller/stripe/stripe.controller';
 import notFoundRoute from './middleware/404/notFoundRoute';
 import backendServerError from './middleware/500/backendServerError';
 const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const APP_NAME: string = process.env.APP_NAME || 'NodeMultiVendorMarketPlace';
-const APP_PORT: string | number = parseInt(process.env.APP_PORT || '8080', 10);
-const APP_HOST: string = process.env.APP_HOST || 'localhost';
-const App_OWNER: string = process.env.APP_OWNER || 'codingLamb';
-const API_VERSION: string | number = process.env.API_VERSION || 'v1';
+const APP_NAME: string = process.env.APP_NAME as string || 'NodeMultiVendorMarketPlace';
+const APP_PORT: string | number = parseInt(process.env.APP_PORT as string || '8080', 10);
+const APP_HOST: string | number = process.env.APP_HOST as string | number || 'localhost';
+const App_OWNER: string = process.env.APP_OWNER as string || 'codingLamb';
+const API_VERSION: string | number = process.env.API_VERSION as string || 'v1';
 if (process.env.NODE_ENV as string === 'development') {
     app.use(morgan('dev'));
 }
@@ -32,11 +33,10 @@ app.use(cors({
 app.use(helmet());
 app.use(compression());
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
-    standardHeaders: 'draft-8', // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
-    legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
-    // store: ... , // Redis, Memcached, etc. See below.
+    windowMs: 15 * 60 * 1000,
+    limit: 100,
+    standardHeaders: 'draft-8',
+    legacyHeaders: false,
 })
 app.use(limiter);
 app.use(`/api/${API_VERSION}/user`, userRoute);
@@ -46,8 +46,7 @@ app.use(`/api/${API_VERSION}/product`, productRoute);
 app.use(`/api/${API_VERSION}/category`, categoryRoute);
 app.use(`/api/${API_VERSION}/order`, orderRoute);
 app.use(`/api/${API_VERSION}/cart`, cartRoute);
-
-// Custom middleware routes to handle 404 incoming http request and 500 server-side error
+app.use(`/api/${API_VERSION}/payment`, paymentRoute);
 app.use(notFoundRoute);
 app.use(backendServerError);
 async function serve() {
