@@ -1,12 +1,15 @@
 import express from 'express';
 import authenticationToken from '../../middleware/auth/authenticationToken.middleware';
 import globalValidator from '../../utils/globalValidator';
-import { notificationValidationSchema } from '../../utils/validator';
+import { notificationValidationSchema, updateNotificationValidationSchema } from '../../utils/validator';
 import createNotification from '../../service/impl/notification/createNotification/createNotification.impl';
 import showNotifications from '../../service/impl/notification/showNotifications/showNotifications.impl';
 import showNotification from '../../service/impl/notification/showNotification/showNotification.impl';
+import updateNotification from '../../service/impl/notification/updateNotification/updateNotification.impl';
 const router = express.Router();
 router.post('/create-notification', authenticationToken, globalValidator(notificationValidationSchema), createNotification);
 router.get('/show-notifications', authenticationToken, showNotifications);
 router.get('/show-notification/:id', authenticationToken, showNotification);
+router.put('/update-notification/:id', authenticationToken, globalValidator(updateNotificationValidationSchema), updateNotification);
+
 export default router;
