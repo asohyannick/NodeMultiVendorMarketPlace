@@ -4,7 +4,9 @@ import { processStripePayment } from '../../service/impl/stripe/processStripePay
 import globalValidator from '../../utils/globalValidator';
 import { validateStripePayment } from '../../utils/validator';
 import { showStripePayments } from '../../service/impl/stripe/showStripePayments/showStripePayments.impl';
+import { showStripePayment } from '../../service/impl/stripe/showStripePayment/showStripePayment.impl';
 const router = express.Router();
 router.post('/create-payment', authenticationToken, globalValidator(validateStripePayment), processStripePayment);
 router.get('/show-payments', authenticationToken, showStripePayments);
+router.get('/show-payment/:id', authenticationToken, showStripePayment);
 export default router;
