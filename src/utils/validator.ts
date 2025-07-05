@@ -335,6 +335,36 @@ const updateWishListValidationSchema = Yup.object().shape({
         notes: Yup.string().optional(),
     })).required('At least one item is required in the wish list'),
 });
+const contactValidationSchema = Yup.object().shape({
+    userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    firstName: Yup.string().required('First name is required'),
+    lastName: Yup.string().required('Last name is required'),
+    email: Yup.string().email('Invalid email format').required('Email is required').trim().lowercase(),
+    phone: Yup.number().required('Phone number is required').positive('Phone number must be positive').integer('Phone number must be an integer'),
+    address: Yup.object().shape({
+        street: Yup.string().required('Street is required'),
+        city: Yup.string().required('City is required'),
+        state: Yup.string().required('State is required'),
+        country: Yup.string().required('Country is required'),
+        zipCode: Yup.string().required('Zip code is required'),
+    }).required('Address is required'),
+    notes: Yup.string().optional(),
+});
+const updateContactValidationSchema = Yup.object().shape({
+    userId: Yup.mixed<Types.ObjectId>().required('User ID is required'),
+    firstName: Yup.string().required('First name is required'),
+    lastName: Yup.string().required('Last name is required'),
+    email: Yup.string().email('Invalid email format').required('Email is required').trim().lowercase(),
+    phone: Yup.number().required('Phone number is required').positive('Phone number must be positive').integer('Phone number must be an integer'),
+    address: Yup.object().shape({
+        street: Yup.string().required('Street is required'),
+        city: Yup.string().required('City is required'),
+        state: Yup.string().required('State is required'),
+        country: Yup.string().required('Country is required'),
+        zipCode: Yup.string().required('Zip code is required'),
+    }).required('Address is required'),
+    notes: Yup.string().optional(),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -359,4 +389,6 @@ export {
     updateNotificationValidationSchema,
     wishListValidationSchema,
     updateWishListValidationSchema,
+    contactValidationSchema,
+    updateContactValidationSchema,
 }
