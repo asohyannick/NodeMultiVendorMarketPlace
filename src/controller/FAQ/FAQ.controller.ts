@@ -1,12 +1,14 @@
 import express from 'express';
 import authenticationToken from '../../middleware/auth/authenticationToken.middleware';
 import globalValidator from '../../utils/globalValidator';
-import { faqValidationSchema } from '../../utils/validator';
+import { faqValidationSchema, updateFAQValidationSchema } from '../../utils/validator';
 import createQuestion from '../../service/impl/FAQ/createQuestion/createQuestion.impl';
 import showQuestions from '../../service/impl/FAQ/showQuestions/showQuestions.impl';
 import showQuestion from '../../service/impl/FAQ/showQuestion/showQuestion.impl';
+import updateQuestion from '../../service/impl/FAQ/updateQuestion/updateQuestion.impl';
 const router = express.Router();
 router.post('/create-question', authenticationToken, globalValidator(faqValidationSchema), createQuestion);
 router.get('/show-questions', authenticationToken, showQuestions);
 router.get('/show-question/:id',authenticationToken, showQuestion);
+router.put('/update-faq/:id', authenticationToken, globalValidator(updateFAQValidationSchema), updateQuestion);
 export default router;
