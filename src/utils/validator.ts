@@ -365,6 +365,18 @@ const updateContactValidationSchema = Yup.object().shape({
     }).required('Address is required'),
     notes: Yup.string().optional(),
 });
+const faqValidationSchema = Yup.object().shape({
+    question: Yup.string().required('Question is required').trim(),
+    answer: Yup.string().required('Answer is required').trim(),
+    category: Yup.string().required('Category is required').trim(),
+    isActive: Yup.boolean().required('Active status is required').default(false),
+});
+const updateFAQValidationSchema = Yup.object().shape({
+    question: Yup.string().required('Question is required').trim(),
+    answer: Yup.string().required('Answer is required').trim(),
+    category: Yup.string().required('Category is required').trim(),
+    isActive: Yup.boolean().required('Active status is required').default(false),
+});
 export {
     validateUserRegistration,
     validateUserLogin,
@@ -391,4 +403,6 @@ export {
     updateWishListValidationSchema,
     contactValidationSchema,
     updateContactValidationSchema,
+    faqValidationSchema,
+    updateFAQValidationSchema,
 }

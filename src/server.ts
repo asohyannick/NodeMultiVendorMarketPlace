@@ -19,6 +19,7 @@ import reviewRoute from './controller/review/review.controller';
 import notificationRoute from './controller/notification/notification.controller';
 import wishListRoute from './controller/wishList/wishList.controller';
 import contactRoute from './controller/contact/contact.controller';
+import questionRoute from './controller/FAQ/FAQ.controller';
 import notFoundRoute from './middleware/404/notFoundRoute';
 import backendServerError from './middleware/500/backendServerError';
 const app: Application = express();
@@ -65,7 +66,7 @@ app.use(`/api/${API_VERSION}/review`, reviewRoute);
 app.use(`/api/${API_VERSION}/notification`, notificationRoute);
 app.use(`/api/${API_VERSION}/wishlist`, wishListRoute);
 app.use(`/api/${API_VERSION}/contact`, contactRoute);
-
+app.use(`/api/${API_VERSION}/question`, questionRoute);
 app.use(notFoundRoute);
 app.use(backendServerError);
 async function serve() {
