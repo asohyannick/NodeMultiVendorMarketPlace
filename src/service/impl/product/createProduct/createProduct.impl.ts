@@ -8,17 +8,22 @@ const createProduct = async (req: Request, res: Response): Promise<Response> => 
         description,
         price,
         stockQuantity,
-        images,
         ratings,
         tags,
     } = req.body;
+    // check if files are provided
+    if (!req.files || (Array.isArray(req.files) && req.files.length === 0)) {
+        return res.status(StatusCodes.NOT_FOUND).json({message: "No files have been uploaded!"});
+    }
+    // Extract files url
+    const imageURLs = (req.files as Express.Multer.File[]).map(file => file.path);
     try {
         const newProduct = new Product({
             name,
             description,
             price,
             stockQuantity,
-            images,
+            images: imageURLs,
             ratings,
             tags,
             status: ProductStatus.AVAILABLE,

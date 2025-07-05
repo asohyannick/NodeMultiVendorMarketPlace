@@ -8,8 +8,9 @@ import showProduct from '../../service/impl/product/showProduct/showProduct.impl
 import updateProduct from '../../service/impl/product/updateProduct/updateProduct.impl';
 import deleteProduct from '../../service/impl/product/deleteProduct/deleteProduct.impl';
 import searchProducts from '../../service/impl/product/searchProducts/searchProducts.impl';
+import upload from '../../config/cloudinaryConfig/cloudinaryConfig.config';
 const router = express.Router();
-router.post('/create-product', authenticationToken, globalValidator(productValidationSchema), createProduct);
+router.post('/create-product', authenticationToken, upload, globalValidator(productValidationSchema), createProduct);
 router.get('/show-products', authenticationToken, showProducts);
 router.get('/search-products', authenticationToken, searchProducts);
 router.get('/show-product/:id', authenticationToken, showProduct);
