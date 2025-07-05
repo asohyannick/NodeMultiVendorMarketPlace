@@ -3,6 +3,8 @@ import authenticationToken from '../../middleware/auth/authenticationToken.middl
 import globalValidator from '../../utils/globalValidator';
 import createContact from '../../service/impl/contact/createContact/createContact.impl';
 import { contactValidationSchema } from '../../utils/validator';
+import showContacts from '../../service/impl/contact/showContacts/showContacts.impl';
 const router = express.Router();
 router.post('/create-contact', authenticationToken, globalValidator(contactValidationSchema), createContact);
+router.get('/show-contacts', authenticationToken, showContacts);
 export default router;
