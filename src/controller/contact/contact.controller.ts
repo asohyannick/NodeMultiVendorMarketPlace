@@ -6,10 +6,11 @@ import { contactValidationSchema, updateContactValidationSchema } from '../../ut
 import showContacts from '../../service/impl/contact/showContacts/showContacts.impl';
 import showContact from '../../service/impl/contact/showContact/showContact.impl';
 import updateContact from '../../service/impl/contact/updateContact/updateContact.impl';
+import deleteContact from '../../service/impl/contact/deleteContact/deleteContact.impl';
 const router = express.Router();
 router.post('/create-contact', authenticationToken, globalValidator(contactValidationSchema), createContact);
 router.get('/show-contacts', authenticationToken, showContacts);
 router.get('/show-contact/:id', authenticationToken, showContact);
 router.put('/update-contact/:id', authenticationToken, globalValidator(updateContactValidationSchema), updateContact);
-
+router.delete('/delete-contact/:id', authenticationToken, deleteContact);
 export default router;
